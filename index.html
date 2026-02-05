@@ -6,58 +6,51 @@
     <title>For Paloma ❤️</title>
     <style>
         body {
+            margin: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #fff0f3; 
+            background-color: #fff0f3;
             font-family: 'Georgia', serif;
             text-align: center;
-            overflow: hidden; 
+            overflow: hidden; /* Keeps the runaway button inside the screen */
         }
-        h1 { color: #c9184a; font-size: 2.2rem; margin-bottom: 30px; padding: 0 20px; }
-        .btn-container {
-            position: relative;
-            width: 100%;
-            height: 200px;
+        h1 { color: #c9184a; padding: 20px; z-index: 1; }
+        .container {
             display: flex;
-            justify-content: center;
+            gap: 20px;
             align-items: center;
+            justify-content: center;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
         }
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
-            padding: 15px 32px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
-            z-index: 1000; 
-            transition: all 0.2s ease;
+            z-index: 1000; /* Stays on top */
         }
         #noBtn {
             background-color: #8a8a8a;
             color: white;
-            padding: 12px 24px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            position: absolute;
+            position: relative; /* Starts normal, then becomes absolute in JS */
             z-index: 500;
-            transition: 0.1s;
         }
-        .final-text { color: #c9184a; line-height: 1.6; padding: 20px; }
+        .final-text { color: #c9184a; line-height: 1.6; }
     </style>
 </head>
 <body>
 
     <div id="content">
         <h1>Hi Paloma, will you be Mauro's Valentine? ❤️</h1>
-        <div class="btn-container">
+        <div class="container">
             <button id="yesBtn" onclick="celebrate()">YES</button>
             <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
         </div>
@@ -66,28 +59,30 @@
     <script>
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
-        
         let yesScale = 1;
-        const phrases = [
-            "Are you sure?", "Paloma...", "Think about it!", "Wrong choice!", 
-            "Mauro will be sad :(", "Try again!", "You're too slow!", "Not an option!"
-        ];
         let phraseIndex = 0;
+        const phrases = ["Are you sure?", "Paloma...", "Think about it!", "Wrong choice!", "Mauro will be sad :(", "Try again!", "Not an option!"];
 
         function moveButton() {
-            // Calculate random positions within the visible window
-            const i = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
-            const j = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+            // Switch to absolute positioning so it can fly around
+            noBtn.style.position = 'absolute';
             
-            noBtn.style.left = i + "px";
-            noBtn.style.top = j + "px";
+            // Math to keep button within the phone/browser screen
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            
+            const newX = Math.random() * maxX;
+            const newY = Math.random() * maxY;
+            
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
 
-            // Change the button text to the funny phrases
+            // Change text
             noBtn.innerText = phrases[phraseIndex % phrases.length];
             phraseIndex++;
 
-            // Make the Yes button grow bigger
-            yesScale += 0.35;
+            // Make Yes Button Grow
+            yesScale += 0.4; 
             yesBtn.style.transform = `scale(${yesScale})`;
         }
 

@@ -2,99 +2,102 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Paloma ❤️</title>
     <style>
         body {
             margin: 0;
-            height: 100vh;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            height: 100vh;
             background-color: #fff0f3;
             font-family: sans-serif;
-            text-align: center;
             overflow: hidden;
-            position: relative;
         }
-        h1 { color: #c9184a; font-size: 2rem; padding: 20px; margin-bottom: 50px; }
+        h1 {
+            color: #c9184a;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            padding: 0 20px;
+            text-align: center;
+        }
+        .wrap {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+            height: 50px;
+        }
+        button {
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            z-index: 9999;
-            transition: transform 0.2s;
+            transition: 0.3s;
+            z-index: 100;
         }
         #noBtn {
             background-color: #8a8a8a;
             color: white;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            position: absolute; /* Starts absolute to ensure it moves */
-            margin-left: 150px; /* Positions it next to Yes initially */
-            z-index: 999;
+            position: absolute; /* Changed to absolute immediately */
+            left: 55%; /* Positions it to the right of center initially */
+            transition: 0.1s;
         }
     </style>
 </head>
 <body>
 
-    <div id="main">
-        <h1>Hi Paloma, will you be Mauro's Valentine? ❤️</h1>
+    <h1 id="question">Hi Paloma, will you be Mauro's Valentine? ❤️</h1>
+
+    <div class="wrap">
         <button id="yesBtn" onclick="celebrate()">YES</button>
-        <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
-        let currentScale = 1;
-        let phraseIndex = 0;
+        const phrases = ["Are you sure?", "Paloma, please?", "Think again!", "Wrong button!", "Mauro will be sad!", "Try again!", "Nice try!"];
+        
+        let scale = 1;
+        let index = 0;
 
-        const phrases = [
-            "Are you sure?", 
-            "Paloma, please?", 
-            "Mauro will cry...", 
-            "Wrong button!", 
-            "You're being difficult!", 
-            "Try again!", 
-            "Not happening!"
-        ];
-
-        function moveButton() {
-            // 1. Move the button
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        function moveNo() {
+            // 1. Move the No button to a random spot within the window
+            // We use 80% of width/height so it doesn't hit the very edge
+            const x = Math.random() * (window.innerWidth * 0.8);
+            const y = Math.random() * (window.innerHeight * 0.8);
             
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
-            noBtn.style.margin = '0'; // Remove the initial margin
 
-            // 2. Change the text
-            noBtn.innerText = phrases[phraseIndex % phrases.length];
-            phraseIndex++;
+            // 2. Change text
+            noBtn.innerText = phrases[index % phrases.length];
+            index++;
 
-            // 3. Make the Yes button bigger
-            currentScale += 0.5;
-            yesBtn.style.transform = `scale(${currentScale})`;
+            // 3. Make Yes button bigger
+            scale += 0.5;
+            yesBtn.style.transform = `scale(${scale})`;
         }
 
         function celebrate() {
             document.body.innerHTML = `
-                <div style="padding: 20px;">
-                    <h1 style="color: #c9184a; line-height: 1.6;">
-                        Good. 🥰 <br><br> 
-                        Excited to spend the rest of our Valentines together. <br><br> 
-                        See you at dinner on the 14th!
-                    </h1>
-                    <div style="font-size: 3rem;">❤️❤️❤️</div>
+                <div style="text-align:center; padding: 20px;">
+                    <h1 style="color: #c9184a; font-size: 2rem;">Good. 🥰</h1>
+                    <h2 style="color: #ff4d6d;">Excited to spend the rest of our Valentines together.</h2>
+                    <h3 style="color: #c9184a;">See you at dinner on the 14th!</h3>
+                    <div style="font-size: 4rem;">❤️❤️❤️</div>
                 </div>
             `;
         }

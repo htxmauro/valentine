@@ -1,103 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Paloma ❤️</title>
+    <title>For Paloma</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
+            background-color: #ffafcc; /* Bright pink - if you don't see this, it hasn't updated! */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #fff0f3;
+            margin: 0;
             font-family: sans-serif;
             overflow: hidden;
         }
-        h1 {
-            color: #c9184a;
-            font-size: 1.8rem;
-            margin-bottom: 40px;
-            padding: 0 20px;
-            text-align: center;
-        }
-        .wrap {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            width: 100%;
-            height: 50px;
-        }
-        button {
-            padding: 15px 25px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
         #yesBtn {
-            background-color: #ff4d6d;
+            background-color: #ff0054;
             color: white;
-            transition: 0.3s;
+            padding: 20px 40px;
+            font-size: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
             z-index: 100;
         }
         #noBtn {
-            background-color: #8a8a8a;
-            color: white;
-            position: absolute; /* Changed to absolute immediately */
-            left: 55%; /* Positions it to the right of center initially */
+            background-color: #ffffff;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            position: absolute;
             transition: 0.1s;
         }
     </style>
 </head>
 <body>
 
-    <h1 id="question">Hi Paloma, will you be Mauro's Valentine? ❤️</h1>
+    <h1 style="color: white; text-shadow: 2px 2px #ff0054;">Hi Paloma, will you be Mauro's Valentine? ❤️</h1>
 
-    <div class="wrap">
-        <button id="yesBtn" onclick="celebrate()">YES</button>
-        <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()">No</button>
-    </div>
+    <button id="yesBtn" onclick="celebrate()">YES</button>
+    <button id="noBtn" onmouseover="move()" onclick="move()" style="left: 60%; top: 50%;">No</button>
 
     <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const phrases = ["Are you sure?", "Paloma, please?", "Think again!", "Wrong button!", "Mauro will be sad!", "Try again!", "Nice try!"];
-        
         let scale = 1;
-        let index = 0;
-
-        function moveNo() {
-            // 1. Move the No button to a random spot within the window
-            // We use 80% of width/height so it doesn't hit the very edge
-            const x = Math.random() * (window.innerWidth * 0.8);
-            const y = Math.random() * (window.innerHeight * 0.8);
+        function move() {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            const no = document.getElementById('noBtn');
+            const yes = document.getElementById('yesBtn');
             
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-
-            // 2. Change text
-            noBtn.innerText = phrases[index % phrases.length];
-            index++;
-
-            // 3. Make Yes button bigger
+            no.style.left = x + 'px';
+            no.style.top = y + 'px';
+            no.innerText = "Are you sure?";
+            
             scale += 0.5;
-            yesBtn.style.transform = `scale(${scale})`;
+            yes.style.transform = `scale(${scale})`;
         }
 
         function celebrate() {
             document.body.innerHTML = `
-                <div style="text-align:center; padding: 20px;">
-                    <h1 style="color: #c9184a; font-size: 2rem;">Good. 🥰</h1>
-                    <h2 style="color: #ff4d6d;">Excited to spend the rest of our Valentines together.</h2>
-                    <h3 style="color: #c9184a;">See you at dinner on the 14th!</h3>
-                    <div style="font-size: 4rem;">❤️❤️❤️</div>
+                <div style="text-align:center; color: white;">
+                    <h1>Good. 🥰</h1>
+                    <h2>Excited to spend the rest of our Valentines together.</h2>
+                    <h3>See you at dinner on the 14th!</h3>
+                    <p style="font-size: 50px;">❤️❤️❤️</p>
                 </div>
             `;
         }
